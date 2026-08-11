@@ -1,0 +1,1423 @@
+/* =========================================================
+   AIR DRAWING — PROFESSIONAL WEB UI
+   ========================================================= */
+
+:root {
+    --bg: #0b0d10;
+    --panel: rgba(17, 20, 24, 0.90);
+    --panel-solid: #111418;
+
+    --border: rgba(255, 255, 255, 0.12);
+    --border-soft: rgba(255, 255, 255, 0.08);
+
+    --text: #f5f7fa;
+    --text-secondary: #b4bcc6;
+    --text-muted: #7d8792;
+
+    --success: #65d88a;
+    --warning: #f1c66b;
+    --danger: #ff6d6d;
+
+    --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+
+    --radius-small: 9px;
+    --radius-medium: 13px;
+    --radius-large: 18px;
+}
+
+
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   START SCREEN
+   ========================================================= */
+
+.start-screen {
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    place-items: center;
+
+    padding: 24px;
+
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            rgba(255, 255, 255, 0.075),
+            transparent 35%
+        ),
+        #0b0d10;
+}
+
+
+.start-card {
+    width: min(680px, 100%);
+
+    padding: 44px;
+
+    text-align: center;
+
+    background: rgba(17, 20, 24, 0.94);
+
+    border: 1px solid var(--border);
+
+    border-radius: 28px;
+
+    box-shadow: var(--shadow);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+
+/* =========================================================
+   START LOGO
+   ========================================================= */
+
+.brand-mark {
+    width: 68px;
+    height: 68px;
+
+    display: grid;
+    place-items: center;
+
+    margin: 0 auto 20px;
+
+    border-radius: 20px;
+
+    background: #22262c;
+
+    font-size: 32px;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+
+/* =========================================================
+   START TEXT
+   ========================================================= */
+
+.eyebrow {
+    margin-bottom: 8px;
+
+    color: #9da5af;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 0.16em;
+}
+
+
+.start-card h1 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: clamp(38px, 6vw, 62px);
+
+    line-height: 1;
+
+    letter-spacing: -0.045em;
+}
+
+
+.subtitle {
+    max-width: 470px;
+
+    margin: 16px auto 30px;
+
+    color: var(--text-secondary);
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   GESTURE INTRO
+   ========================================================= */
+
+.gesture-preview {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 30px;
+}
+
+
+.gesture-item {
+    padding: 15px 8px;
+
+    border: 1px solid var(--border-soft);
+
+    border-radius: 15px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+.gesture-item:hover {
+    background: rgba(255, 255, 255, 0.065);
+
+    border-color: rgba(255, 255, 255, 0.15);
+
+    transform: translateY(-1px);
+}
+
+
+.gesture-item span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 24px;
+}
+
+
+.gesture-item b {
+    display: block;
+
+    color: #f1f3f6;
+
+    font-size: 12px;
+}
+
+
+.gesture-item small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--text-muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   START BUTTON
+   ========================================================= */
+
+.primary-button {
+    width: 100%;
+
+    padding: 15px 20px;
+
+    border: 0;
+
+    border-radius: 14px;
+
+    background: #f4f5f7;
+
+    color: #0a0c0f;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+
+.primary-button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 25px rgba(255, 255, 255, 0.08);
+}
+
+
+.primary-button:active {
+    transform: translateY(0);
+}
+
+
+.primary-button:disabled {
+    opacity: 0.55;
+
+    cursor: wait;
+}
+
+
+.camera-note {
+    margin-top: 14px;
+
+    color: #727b86;
+
+    font-size: 12px;
+}
+
+
+.start-error {
+    min-height: 20px;
+
+    margin-top: 12px;
+
+    color: #ff7777;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MAIN DRAWING APPLICATION
+   ========================================================= */
+
+.drawing-app {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background: #111;
+}
+
+
+/* =========================================================
+   CAMERA
+   ========================================================= */
+
+#video {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    /*
+       Mirror the camera so hand movement feels natural.
+    */
+
+    transform: scaleX(-1);
+
+    background: #111;
+
+    user-select: none;
+}
+
+
+/* =========================================================
+   CANVAS LAYERS
+   ========================================================= */
+
+#drawingCanvas,
+#uiCanvas {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    user-select: none;
+}
+
+
+#drawingCanvas {
+    z-index: 2;
+}
+
+
+#uiCanvas {
+    z-index: 3;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar {
+    position: absolute;
+
+    z-index: 10;
+
+    top: 18px;
+
+    left: 20px;
+    right: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 10px 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+
+    background: var(--panel);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.20);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+
+.brand-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.35);
+}
+
+
+/* =========================================================
+   STATUS GROUP
+   ========================================================= */
+
+.status-group {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* =========================================================
+   MODE BADGE
+   ========================================================= */
+
+.mode-badge {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    min-height: 40px;
+
+    padding: 0 13px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: var(--panel);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.20);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.03em;
+}
+
+
+.mode-badge.idle {
+    color: #b8bec6;
+}
+
+
+.mode-badge.drawing {
+    color: var(--success);
+}
+
+
+.mode-badge.eraser {
+    color: var(--warning);
+}
+
+
+.mode-badge.palette {
+    color: #aeb8ff;
+}
+
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+
+/* =========================================================
+   CURRENT COLOR / SIZE INDICATOR
+   ========================================================= */
+
+.tool-pill {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    min-height: 40px;
+
+    padding: 0 13px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: var(--panel);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.20);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.03em;
+}
+
+
+.color-preview {
+    width: 13px;
+    height: 13px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(255, 255, 255, 0.8);
+
+    box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.7);
+}
+
+
+.divider {
+    width: 1px;
+    height: 14px;
+
+    background: rgba(255, 255, 255, 0.15);
+}
+
+
+/* =========================================================
+   COLOR PALETTE
+   ========================================================= */
+
+.palette-panel {
+    position: absolute;
+
+    z-index: 11;
+
+    top: 82px;
+
+    right: 20px;
+
+    width: 224px;
+
+    padding: 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    background: var(--panel);
+
+    box-shadow: var(--shadow);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    opacity: 0;
+
+    transform: translateX(12px);
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.16s ease,
+        transform 0.16s ease;
+}
+
+
+.palette-panel.visible {
+    opacity: 1;
+
+    transform: translateX(0);
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   PALETTE HEADER
+   ========================================================= */
+
+.palette-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+
+    color: #8e97a2;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.15em;
+}
+
+
+#paletteHint {
+    color: #d9dde3;
+
+    letter-spacing: 0.05em;
+}
+
+
+/* =========================================================
+   COLOR GRID
+   ========================================================= */
+
+.color-grid {
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 11px;
+}
+
+
+/* =========================================================
+   INDIVIDUAL COLOR BUTTON
+   ========================================================= */
+
+.color-button {
+    position: relative;
+
+    width: 34px;
+    height: 34px;
+
+    justify-self: center;
+
+    padding: 0;
+
+    border: 2px solid rgba(255, 255, 255, 0.45);
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        border-color 0.12s ease;
+}
+
+
+.color-button:hover,
+.color-button.hovered {
+    transform: scale(1.12);
+
+    box-shadow:
+        0 0 0 3px rgba(255, 255, 255, 0.35);
+}
+
+
+.color-button.selected {
+    box-shadow:
+        0 0 0 3px rgba(255, 255, 255, 0.95),
+        0 0 0 5px rgba(0, 0, 0, 0.75);
+}
+
+
+.color-button:focus-visible {
+    box-shadow:
+        0 0 0 3px #fff,
+        0 0 0 5px rgba(0, 0, 0, 0.7);
+}
+
+
+/*
+   Special treatment for BLACK and WHITE so both
+   remain clearly visible.
+*/
+
+.color-button[data-color="BLACK"] {
+    border: 2px solid #ffffff;
+
+    box-shadow:
+        inset 0 0 0 1px #000,
+        0 0 0 1px rgba(0, 0, 0, 0.9);
+}
+
+
+.color-button[data-color="WHITE"] {
+    border: 2px solid #737982;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+
+.color-button[data-color="BLACK"].selected {
+    box-shadow:
+        0 0 0 3px #fff,
+        0 0 0 5px #000;
+}
+
+
+.color-button[data-color="RED"].selected {
+    box-shadow:
+        0 0 0 3px #fff,
+        0 0 0 5px #6d1515;
+}
+
+
+/* =========================================================
+   COLOR LABEL
+   ========================================================= */
+
+.color-label {
+    position: absolute;
+
+    left: 50%;
+    top: calc(100% + 7px);
+
+    transform: translateX(-50%);
+
+    padding: 3px 6px;
+
+    border-radius: 5px;
+
+    background: rgba(0, 0, 0, 0.82);
+
+    color: #fff;
+
+    font-size: 8px;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition: opacity 0.12s ease;
+}
+
+
+.color-button:hover .color-label,
+.color-button:focus-visible .color-label {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   RECENT COLORS
+   ========================================================= */
+
+.recent-title {
+    margin-top: 17px;
+
+    margin-bottom: 8px;
+
+    color: #8e97a2;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.15em;
+}
+
+
+.recent-colors {
+    min-height: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.recent-button {
+    width: 22px;
+    height: 22px;
+
+    padding: 0;
+
+    border: 2px solid rgba(255, 255, 255, 0.65);
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+}
+
+
+.recent-button:hover {
+    transform: scale(1.12);
+
+    box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+
+/* =========================================================
+   PALETTE HOVER PREVIEW
+   ========================================================= */
+
+.hover-preview {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    min-height: 32px;
+
+    margin-top: 12px;
+
+    padding: 7px 9px;
+
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    color: #adb5bf;
+
+    font-size: 10px;
+}
+
+
+.hover-dot {
+    width: 10px;
+    height: 10px;
+
+    flex: 0 0 auto;
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+
+/* =========================================================
+   BOTTOM TOOLBAR
+   ========================================================= */
+
+.bottom-toolbar {
+    position: absolute;
+
+    z-index: 10;
+
+    left: 50%;
+    bottom: 18px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    background: var(--panel);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.25);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* =========================================================
+   TOOL BUTTON
+   ========================================================= */
+
+.tool-button {
+    height: 35px;
+
+    min-width: 35px;
+
+    padding: 0 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.055);
+
+    color: #e9edf2;
+
+    cursor: pointer;
+
+    font-weight: 800;
+
+    transition:
+        background 0.12s ease,
+        transform 0.12s ease,
+        color 0.12s ease;
+}
+
+
+.tool-button:hover {
+    background: rgba(255, 255, 255, 0.12);
+
+    transform: translateY(-1px);
+}
+
+
+.tool-button:active {
+    transform: translateY(0);
+}
+
+
+.tool-button:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+
+    outline-offset: 2px;
+}
+
+
+.tool-button.danger:hover {
+    color: var(--danger);
+}
+
+
+.tool-button.save:hover {
+    color: #9ee8b6;
+}
+
+
+/* =========================================================
+   TOOLBAR DIVIDER
+   ========================================================= */
+
+.toolbar-divider {
+    width: 1px;
+
+    height: 23px;
+
+    margin: 0 3px;
+
+    background: rgba(255, 255, 255, 0.12);
+}
+
+
+/* =========================================================
+   BRUSH SIZE
+   ========================================================= */
+
+.size-control {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #b5bdc7;
+
+    font-size: 10px;
+}
+
+
+.size-control label {
+    white-space: nowrap;
+}
+
+
+.size-control input[type="range"] {
+    width: 95px;
+
+    height: 4px;
+
+    cursor: pointer;
+
+    accent-color: #ffffff;
+}
+
+
+#sizeValue {
+    width: 22px;
+
+    color: #fff;
+
+    text-align: right;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   GESTURE HELP
+   ========================================================= */
+
+.gesture-help {
+    position: absolute;
+
+    z-index: 10;
+
+    left: 20px;
+    bottom: 18px;
+
+    display: flex;
+
+    gap: 13px;
+
+    padding: 10px 12px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 11px;
+
+    background: var(--panel);
+
+    color: #b6bec8;
+
+    font-size: 10px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.20);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* =========================================================
+   TOAST NOTIFICATION
+   ========================================================= */
+
+.toast {
+    position: absolute;
+
+    z-index: 20;
+
+    top: 82px;
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        translateY(-8px);
+
+    padding: 10px 15px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    background: var(--panel);
+
+    color: #fff;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.03em;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.30);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    transition:
+        opacity 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.toast.show {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+/* =========================================================
+   LOADING OVERLAY
+   ========================================================= */
+
+.loading-overlay {
+    position: absolute;
+
+    z-index: 30;
+
+    inset: 0;
+
+    display: grid;
+
+    place-content: center;
+
+    gap: 12px;
+
+    background: rgba(5, 7, 9, 0.76);
+
+    color: #e8ebef;
+
+    text-align: center;
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+
+.loading-overlay p {
+    font-size: 13px;
+
+    color: #c4cad1;
+}
+
+
+/* =========================================================
+   LOADING SPINNER
+   ========================================================= */
+
+.spinner {
+    width: 34px;
+    height: 34px;
+
+    margin: auto;
+
+    border: 3px solid rgba(255, 255, 255, 0.18);
+
+    border-top-color: #fff;
+
+    border-radius: 50%;
+
+    animation:
+        spin 0.75s linear infinite;
+}
+
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .palette-panel {
+        width: 210px;
+    }
+
+    .gesture-help {
+        gap: 9px;
+    }
+
+    .gesture-help span {
+        font-size: 9px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .start-screen {
+        padding: 15px;
+    }
+
+
+    .start-card {
+        padding: 30px 20px;
+
+        border-radius: 22px;
+    }
+
+
+    .start-card h1 {
+        font-size: 42px;
+    }
+
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+
+    .gesture-preview {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 8px;
+
+        margin-bottom: 22px;
+    }
+
+
+    .gesture-item {
+        padding: 13px 7px;
+    }
+
+
+    .topbar {
+        top: 10px;
+
+        left: 10px;
+        right: 10px;
+    }
+
+
+    .brand {
+        padding: 9px 11px;
+
+        font-size: 12px;
+    }
+
+
+    .status-group {
+        gap: 5px;
+    }
+
+
+    .mode-badge,
+    .tool-pill {
+        min-height: 36px;
+
+        padding: 0 9px;
+
+        font-size: 9px;
+    }
+
+
+    .palette-panel {
+        top: 65px;
+
+        right: 10px;
+
+        width: 210px;
+    }
+
+
+    .gesture-help {
+        display: none;
+    }
+
+
+    .bottom-toolbar {
+        left: 10px;
+        right: 10px;
+
+        bottom: 10px;
+
+        transform: none;
+
+        justify-content: center;
+
+        gap: 5px;
+
+        overflow-x: auto;
+    }
+
+
+    .size-control input[type="range"] {
+        width: 70px;
+    }
+
+
+    .tool-button {
+        min-width: 33px;
+
+        padding: 0 8px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .brand {
+        display: none;
+    }
+
+
+    .topbar {
+        justify-content: flex-end;
+    }
+
+
+    .status-group {
+        width: 100%;
+
+        justify-content: flex-end;
+    }
+
+
+    .palette-panel {
+        width: 198px;
+    }
+
+
+    .color-button {
+        width: 31px;
+        height: 31px;
+    }
+
+
+    .bottom-toolbar {
+        flex-wrap: nowrap;
+    }
+
+
+    .toolbar-divider {
+        margin: 0 1px;
+    }
+
+
+    #sizeValue {
+        display: none;
+    }
+}
