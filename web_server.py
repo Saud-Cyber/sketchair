@@ -31,7 +31,7 @@ sys.path.insert(0, str(PYTHON_DIR))
 # run directly (python air_drawing.py). Importing it here is
 # safe and does not touch any hardware.
 
-import air_drawing  # noqa: E402
+import Python.air_drawing as air_drawing  # noqa: E402
 
 
 # ============================================================
