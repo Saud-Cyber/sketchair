@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Air Drawing - Draw in the air using hand gestures and your webcam."
+    >
+
+    <meta
+        name="theme-color"
+        content="#0b0d10"
+    >
+
+    <title>Air Drawing</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================================================
+         START SCREEN
+         ========================================================= -->
+
+    <main class="app-shell">
+
+        <section
+            id="startScreen"
+            class="start-screen"
+        >
+
+            <div class="start-card">
+
+                <!-- Logo -->
+                <div class="brand-mark">
+                    ✋
+                </div>
+
+                <!-- Small heading -->
+                <p class="eyebrow">
+                    TOUCHLESS CREATIVE TOOL
+                </p>
+
+                <!-- Main title -->
+                <h1>
+                    Air Drawing
+                </h1>
+
+                <!-- Description -->
+                <p class="subtitle">
+                    Draw in the air using your webcam
+                    and simple hand gestures.
+                </p>
+
+
+                <!-- =================================================
+                     GESTURE INTRODUCTION
+                     ================================================= -->
+
+                <div class="gesture-preview">
+
+                    <div class="gesture-item">
+                        <span>☝️</span>
+                        <b>Index</b>
+                        <small>Draw</small>
+                    </div>
+
+                    <div class="gesture-item">
+                        <span>✌️</span>
+                        <b>Two fingers</b>
+                        <small>Eraser</small>
+                    </div>
+
+                    <div class="gesture-item">
+                        <span>🖐️</span>
+                        <b>Open palm</b>
+                        <small>Palette</small>
+                    </div>
+
+                    <div class="gesture-item">
+                        <span>🤏</span>
+                        <b>Pinch</b>
+                        <small>Select</small>
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     START BUTTON
+                     ================================================= -->
+
+                <button
+                    id="startButton"
+                    class="primary-button"
+                    type="button"
+                >
+                    Start Air Drawing
+                </button>
+
+
+                <!-- Camera / permission error -->
+                <p
+                    id="startError"
+                    class="start-error"
+                    role="alert"
+                ></p>
+
+
+                <!-- Camera information -->
+                <p class="camera-note">
+                    Your browser will ask for camera permission.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================================
+             MAIN DRAWING APPLICATION
+             ========================================================= -->
+
+        <section
+            id="app"
+            class="drawing-app hidden"
+        >
+
+            <!-- =====================================================
+                 CAMERA
+                 ===================================================== -->
+
+            <video
+                id="video"
+                autoplay
+                playsinline
+                muted
+            ></video>
+
+
+            <!-- =====================================================
+                 DRAWING CANVAS
+                 Transparent canvas containing the user's drawing
+                 ===================================================== -->
+
+            <canvas
+                id="drawingCanvas"
+            ></canvas>
+
+
+            <!-- =====================================================
+                 UI / CURSOR CANVAS
+                 Used for fingertip cursor, hover indication, etc.
+                 ===================================================== -->
+
+            <canvas
+                id="uiCanvas"
+            ></canvas>
+
+
+            <!-- =====================================================
+                 TOP BAR
+                 ===================================================== -->
+
+            <header class="topbar">
+
+                <!-- Brand -->
+                <div class="brand">
+
+                    <span class="brand-dot"></span>
+
+                    <span>
+                        Air Drawing
+                    </span>
+
+                </div>
+
+
+                <!-- Current status -->
+                <div class="status-group">
+
+                    <!-- Gesture mode -->
+                    <div
+                        id="modeBadge"
+                        class="mode-badge idle"
+                    >
+
+                        <span class="status-dot"></span>
+
+                        <span id="modeText">
+                            NO HAND
+                        </span>
+
+                    </div>
+
+
+                    <!-- Current drawing settings -->
+                    <div class="tool-pill">
+
+                        <span
+                            id="colorPreview"
+                            class="color-preview"
+                        ></span>
+
+                        <span id="colorText">
+                            RED
+                        </span>
+
+                        <span class="divider"></span>
+
+                        <span id="sizeText">
+                            6 px
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =====================================================
+                 COLOR PALETTE
+                 ===================================================== -->
+
+            <aside
+                id="palette"
+                class="palette-panel"
+                aria-label="Color palette"
+            >
+
+                <!-- Palette heading -->
+                <div class="palette-header">
+
+                    <span>
+                        COLORS
+                    </span>
+
+                    <span id="paletteHint">
+                        PALM
+                    </span>
+
+                </div>
+
+
+                <!-- =================================================
+                     COLOR GRID
+
+                     JavaScript will insert the 10 colors here.
+
+                     Colors:
+                     Blue
+                     Green
+                     Yellow
+                     Orange
+                     Brown
+                     Black
+                     White
+                     Red
+                     Purple
+                     Pink
+                     ================================================= -->
+
+                <div
+                    id="colorGrid"
+                    class="color-grid"
+                ></div>
+
+
+                <!-- =================================================
+                     RECENT COLORS
+                     ================================================= -->
+
+                <div class="recent-title">
+                    RECENT
+                </div>
+
+                <div
+                    id="recentColors"
+                    class="recent-colors"
+                ></div>
+
+
+                <!-- =================================================
+                     HOVER / PREVIEW AREA
+                     ================================================= -->
+
+                <div
+                    id="hoverPreview"
+                    class="hover-preview"
+                >
+
+                    <span
+                        id="hoverColorDot"
+                        class="hover-dot"
+                    ></span>
+
+                    <span id="hoverColorName">
+                        Move palm over a color
+                    </span>
+
+                </div>
+
+            </aside>
+
+
+            <!-- =====================================================
+                 BOTTOM TOOLBAR
+                 ===================================================== -->
+
+            <div class="bottom-toolbar">
+
+
+                <!-- UNDO -->
+                <button
+                    id="undoButton"
+                    class="tool-button"
+                    type="button"
+                    title="Undo (Z)"
+                    aria-label="Undo"
+                >
+                    ↶
+                </button>
+
+
+                <!-- REDO -->
+                <button
+                    id="redoButton"
+                    class="tool-button"
+                    type="button"
+                    title="Redo (X)"
+                    aria-label="Redo"
+                >
+                    ↷
+                </button>
+
+
+                <div class="toolbar-divider"></div>
+
+
+                <!-- DECREASE BRUSH SIZE -->
+                <button
+                    id="decreaseSize"
+                    class="tool-button"
+                    type="button"
+                    title="Decrease brush size"
+                    aria-label="Decrease brush size"
+                >
+                    −
+                </button>
+
+
+                <!-- =================================================
+                     BRUSH SIZE
+                     ================================================= -->
+
+                <div class="size-control">
+
+                    <label for="sizeSlider">
+                        Brush
+                    </label>
+
+                    <input
+                        id="sizeSlider"
+                        type="range"
+                        min="2"
+                        max="30"
+                        value="6"
+                        step="1"
+                    >
+
+                    <span id="sizeValue">
+                        6
+                    </span>
+
+                </div>
+
+
+                <!-- INCREASE BRUSH SIZE -->
+                <button
+                    id="increaseSize"
+                    class="tool-button"
+                    type="button"
+                    title="Increase brush size"
+                    aria-label="Increase brush size"
+                >
+                    +
+                </button>
+
+
+                <div class="toolbar-divider"></div>
+
+
+                <!-- CLEAR -->
+                <button
+                    id="clearButton"
+                    class="tool-button danger"
+                    type="button"
+                    title="Clear canvas (C)"
+                >
+                    Clear
+                </button>
+
+
+                <!-- SAVE -->
+                <button
+                    id="saveButton"
+                    class="tool-button save"
+                    type="button"
+                    title="Save drawing"
+                >
+                    Save
+                </button>
+
+            </div>
+
+
+            <!-- =====================================================
+                 TOAST / NOTIFICATION
+
+                 Examples:
+                 BLUE SELECTED
+                 RED SELECTED
+                 DRAWING CLEARED
+                 DRAWING SAVED
+                 ===================================================== -->
+
+            <div
+                id="toast"
+                class="toast"
+                role="status"
+                aria-live="polite"
+            ></div>
+
+
+            <!-- =====================================================
+                 GESTURE HELP
+                 ===================================================== -->
+
+            <div class="gesture-help">
+
+                <span>
+                    ☝ Draw
+                </span>
+
+                <span>
+                    ✌ Erase
+                </span>
+
+                <span>
+                    🖐 Palette
+                </span>
+
+                <span>
+                    🤏 Select
+                </span>
+
+            </div>
+
+
+            <!-- =====================================================
+                 LOADING SCREEN
+
+                 Displayed while MediaPipe hand tracking loads.
+                 ===================================================== -->
+
+            <div
+                id="loadingOverlay"
+                class="loading-overlay"
+            >
+
+                <div class="spinner"></div>
+
+                <p>
+                    Loading hand tracking…
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+
+         type="module" is required because app.js imports
+         MediaPipe Tasks Vision.
+         ========================================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+
+
+
+    <script type="module" src="app.js"></script>
+
+</body>
+</html>
