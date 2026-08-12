@@ -130,6 +130,9 @@ let applicationRunning = false;
 let frameTimer = null;
 
 let frameSending = false;
+let awaitingFrameReply = false;
+let awaitingReplyTimer = null;
+let requestNextFrame = null;
 
 let toastTimer = null;
 
@@ -807,9 +810,20 @@ function handlePythonMessage(event) {
         event.data instanceof Blob
     ) {
 
+        awaitingFrameReply = false;
+
+        if (awaitingReplyTimer) {
+            clearTimeout(awaitingReplyTimer);
+            awaitingReplyTimer = null;
+        }
+
         displayProcessedFrame(
             event.data
         );
+
+        if (requestNextFrame) {
+            requestNextFrame();
+        }
 
     }
 
@@ -1022,9 +1036,9 @@ function startFrameLoop() {
     }
 
 
-    const width = 640;
+    const width = 480;
 
-    const height = 360;
+    const height = 270;
 
 
     drawingCanvas.width =
@@ -1096,7 +1110,8 @@ function startFrameLoop() {
 
 
         if (
-            frameSending
+            frameSending ||
+            awaitingFrameReply
         ) {
 
             frameTimer =
@@ -1176,18 +1191,40 @@ function startFrameLoop() {
                     false;
 
 
-                frameTimer =
+                // Wait for the server's reply to THIS frame
+                // before sending the next one, instead of
+                // blindly firing every 60ms. On a slow/loaded
+                // backend, sending on a fixed timer regardless
+                // of round-trip time causes frames to queue up
+                // faster than the server can process them, so
+                // what you see on screen keeps falling further
+                // behind real time. A short safety timeout
+                // still applies in case a reply is ever lost.
+
+                awaitingFrameReply = true;
+
+                if (awaitingReplyTimer) {
+                    clearTimeout(awaitingReplyTimer);
+                }
+
+                awaitingReplyTimer =
                     setTimeout(
-                        sendFrame,
-                        60
+                        () => {
+                            awaitingFrameReply = false;
+                            sendFrame();
+                        },
+                        1500
                     );
 
             },
             "image/jpeg",
-            0.70
+            0.6
         );
 
     }
+
+
+    requestNextFrame = sendFrame;
 
 
     sendFrame();
@@ -1210,9 +1247,20 @@ function stopFrameLoop() {
     }
 
 
-    frameTimer = null;
+    if (awaitingReplyTimer) {
 
+        clearTimeout(
+            awaitingReplyTimer
+        );
+
+    }
+
+
+    frameTimer = null;
+    awaitingReplyTimer = null;
     frameSending = false;
+    awaitingFrameReply = false;
+    requestNextFrame = null;
 
 }
 
