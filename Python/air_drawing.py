@@ -1483,8 +1483,16 @@ def _process_one_frame(frame):
     # ====================================================
     # CREATE CANVAS
     # ====================================================
+    #
+    # Re-created whenever the incoming frame's resolution
+    # changes (not just on the very first frame). Without this
+    # check, a canvas built for one resolution gets reused
+    # against frames of a different size — e.g. if the browser
+    # sends a differently-sized frame than the first one — and
+    # every mask/compositing operation below throws a shape
+    # mismatch.
 
-    if canvas is None:
+    if canvas is None or canvas.shape[:2] != frame.shape[:2]:
 
         canvas = np.zeros_like(
             frame
@@ -1494,6 +1502,11 @@ def _process_one_frame(frame):
             frame.shape[:2],
             dtype=np.uint8
         )
+
+        undo_stack.clear()
+        redo_stack.clear()
+        mask_undo_stack.clear()
+        mask_redo_stack.clear()
 
 
     # ====================================================
