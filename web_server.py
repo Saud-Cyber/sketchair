@@ -10,7 +10,6 @@ from pathlib import Path
 
 from fastapi import FastAPI, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 
@@ -32,7 +31,7 @@ sys.path.insert(0, str(PYTHON_DIR))
 # run directly (python air_drawing.py). Importing it here is
 # safe and does not touch any hardware.
 
-import Python.air_drawing as air_drawing  # noqa: E402
+import air_drawing  # noqa: E402
 
 
 # ============================================================
@@ -63,26 +62,18 @@ app.add_middleware(
 
 
 # ============================================================
-# SERVE CSS / JS / OTHER WEB FILES
+# SERVE THE FRONTEND (index.html, app.js, style.css)
 # ============================================================
-
-app.mount(
-    "/static",
-    StaticFiles(directory=str(WEB_DIR)),
-    name="static"
-)
-
-
+#
+# Mounted at "/" so relative paths in index.html ("app.js",
+# "style.css") resolve the same way whether this FastAPI app
+# is serving them, or the "web version" folder is deployed
+# as-is to a static host like Netlify.
+#
+# This must be registered AFTER /health and /ws below, so
+# those routes are matched first — otherwise the catch-all
+# static mount would shadow them.
 # ============================================================
-# INDEX
-# ============================================================
-
-@app.get("/")
-async def index():
-
-    return FileResponse(
-        WEB_DIR / "index.html"
-    )
 
 
 # ============================================================
@@ -205,6 +196,20 @@ async def websocket_endpoint(
             "WebSocket closed:",
             error
         )
+
+
+# ============================================================
+# STATIC FRONTEND (must come after /health and /ws above)
+# ============================================================
+
+app.mount(
+    "/",
+    StaticFiles(
+        directory=str(WEB_DIR),
+        html=True
+    ),
+    name="static"
+)
 
 
 # ============================================================
