@@ -84,8 +84,8 @@ button {
    ========================================================= */
 
 .start-screen {
-    width: 100vw;
-    height: 100vh;
+    position: fixed;
+    inset: 0;
 
     display: grid;
     place-items: center;
@@ -331,10 +331,8 @@ button {
    ========================================================= */
 
 .drawing-app {
-    position: relative;
-
-    width: 100vw;
-    height: 100vh;
+    position: fixed;
+    inset: 0;
 
     overflow: hidden;
 
