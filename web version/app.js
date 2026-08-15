@@ -20,7 +20,7 @@
 // just the host, like: "sketchair-backend.onrender.com"
 // ============================================================
 
-const BACKEND_HOST = "sketchair-936f.onrender.com";
+const BACKEND_HOST = "sketchair-1.onrender.com";
 
 
 // ============================================================
