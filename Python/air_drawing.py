@@ -2330,31 +2330,17 @@ def _process_one_frame(frame):
 # (python air_drawing.py).
 # ============================================================
 
-def process_frame(self,frame_bytes):
+def process_frame(frame_bytes):
     """
     Takes one raw camera frame as JPEG-encoded bytes (as sent
     by the browser), runs it through hand tracking + drawing,
     and returns the composited output frame as JPEG bytes.
     Returns None if the frame couldn't be decoded.
+
+    Canvas creation/resizing is handled inside _process_one_frame()
+    (it re-inits `canvas`/`canvas_mask` whenever the incoming frame's
+    resolution changes), so nothing extra is needed here.
     """
-
-    h, w = frame.shape[:2]
-    if self.canvas is None or self.canvas.shape[:2] != (h, w):
-        # reinit canvas fresh at new size instead of cv2.resize-ing old canvas down
-        new_canvas = np.zeros((h, w, 3), dtype=np.uint8)
-        new_canvas_mask = np.zeros((h, w), dtype=np.uint8)
-        if self.canvas is not None:
-            # optionally preserve old drawing by pasting top-left, not resizing
-            oh, ow = self.canvas.shape[:2]
-            ph, pw = min(oh, h), min(ow, w)
-            new_canvas[:ph, :pw] = self.canvas[:ph, :pw]
-            new_canvas_mask[:ph, :pw] = self.canvas_mask[:ph, :pw]
-        self.canvas, self.canvas_mask = new_canvas, new_canvas_mask
-
-
-
-
-    global canvas, canvas_mask
 
     nparr = np.frombuffer(frame_bytes, dtype=np.uint8)
     frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
